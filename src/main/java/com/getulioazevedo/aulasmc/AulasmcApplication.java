@@ -25,8 +25,8 @@ public class AulasmcApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Categoria cat1 = new Categoria(null,"Getulio");
-		Categoria cat2 = new Categoria(null,"Ayllinha");
+		Categoria cat1 = new Categoria(null,"Informatica");
+		Categoria cat2 = new Categoria(null,"Escritorio");
 		
 		repo.saveAll(Arrays.asList(cat1,cat2));
 		
