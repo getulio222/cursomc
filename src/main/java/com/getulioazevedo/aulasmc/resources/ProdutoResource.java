@@ -6,24 +6,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.getulioazevedo.aulasmc.domain.Categoria;
-import com.getulioazevedo.aulasmc.services.CategoriaService;
-
-
+import com.getulioazevedo.aulasmc.domain.Produto;
+import com.getulioazevedo.aulasmc.services.ProdutoService;
 
 @RestController
-@RequestMapping(value = "/categorias") // EndPonint da Classe
-public class CategoriaResource {
-
+@RequestMapping(value = "/produtos") // EndPonint da Classe
+public class ProdutoResource {
+	
 	@Autowired
-	private CategoriaService service; // Dependencia do Serviço
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET) // EndPoint do Metodo
-	public ResponseEntity<?> buscarCategoria(@PathVariable Integer id) {
-		Categoria objCate = service.buscar(id); // Objeto estanciado com a metodo de busca do Service
-		return ResponseEntity.ok().body(objCate);
-
+	private ProdutoService prodServ; // Dependencia do Serviço
+	
+	@RequestMapping(value="/{id}",method = RequestMethod.GET) // EndPoint do Metodo
+	public ResponseEntity<?> buscarProduto(@PathVariable Integer id){		
+		Produto objProd = prodServ.buscarProdID(id); // Objeto estanciado com a metodo de busca do Service		
+		return ResponseEntity.ok().body(objProd);
+		
 	}
+	
 
 }
 
@@ -39,3 +38,4 @@ public class CategoriaResource {
  * Criar a logica do Retorno do metodo recebendo o tipo ReponsyEntity o status ok() 
  * e no corpo body(), o objeto.
  */
+
