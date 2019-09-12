@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 @Entity
 public class Produto implements Serializable {
@@ -20,7 +23,8 @@ public class Produto implements Serializable {
 	private Integer id;
 	private String nome;
 	private Double preco;
-
+	
+	@JsonIgnore //Tambem resolve a referencia Ciclica - Padrão de aula futura
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA", 
 	joinColumns = @JoinColumn(name = "produto_id"), 

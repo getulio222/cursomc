@@ -20,7 +20,7 @@ public class CategoriaResource {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET) // EndPoint do Metodo
 	public ResponseEntity<?> buscarCategoria(@PathVariable Integer id) {
-		Categoria objCate = service.buscar(id); // Objeto estanciado com a metodo de busca do Service
+		Categoria objCate = service.buscarCateId(id); // Objeto estanciado recebendo o metodo de busca do Service
 		return ResponseEntity.ok().body(objCate);
 
 	}

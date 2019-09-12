@@ -18,7 +18,7 @@ public class ProdutoResource {
 	
 	@RequestMapping(value="/{id}",method = RequestMethod.GET) // EndPoint do Metodo
 	public ResponseEntity<?> buscarProduto(@PathVariable Integer id){		
-		Produto objProd = prodServ.buscarProdID(id); // Objeto estanciado com a metodo de busca do Service		
+		Produto objProd = prodServ.buscarProdId(id); // Objeto estanciado recebendo o metodo da dependencia Service		
 		return ResponseEntity.ok().body(objProd);
 		
 	}
