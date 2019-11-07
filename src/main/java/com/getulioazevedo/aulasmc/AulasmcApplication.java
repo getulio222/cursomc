@@ -7,12 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import com.getulioazevedo.aulasmc.domain.Categoria;
 import com.getulioazevedo.aulasmc.domain.Cidade;
+import com.getulioazevedo.aulasmc.domain.Cliente;
+import com.getulioazevedo.aulasmc.domain.Endereco;
 import com.getulioazevedo.aulasmc.domain.Estado;
 import com.getulioazevedo.aulasmc.domain.Produto;
+import com.getulioazevedo.aulasmc.domain.enums.TipoCliente;
 import com.getulioazevedo.aulasmc.repositories.CategoriaRepository;
 import com.getulioazevedo.aulasmc.repositories.CidadeRepository;
+import com.getulioazevedo.aulasmc.repositories.ClienteRespository;
+import com.getulioazevedo.aulasmc.repositories.EnderecoRepository;
 import com.getulioazevedo.aulasmc.repositories.EstadoRepository;
 import com.getulioazevedo.aulasmc.repositories.ProdutoRespository;
 
@@ -31,6 +37,10 @@ public class AulasmcApplication implements CommandLineRunner {
 	private EstadoRepository estRepo;
 	@Autowired
 	private CidadeRepository cidRepo;
+	@Autowired
+	private ClienteRespository cliRepo;
+	@Autowired
+	private EnderecoRepository endRepo;
 	
 	
 	@Override
@@ -60,10 +70,25 @@ public class AulasmcApplication implements CommandLineRunner {
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2,c3));	
 		
+		Cliente cli1 = new Cliente(null,"Maria Silva","maria@gmail.com","00011122233",TipoCliente.PESSOA_FISICA);
+		
+		cli1.getTelefones().addAll(Arrays.asList("992378955","995256080"));
+		
+		Endereco e1 = new Endereco(null,"Rua Flores","300","Apto 303","Jardim","38220384",cli1, c1);
+		
+		Endereco e2 = new Endereco(null,"Avenida Matos","105","Sala 800","Centro","355959",cli1,c2);
+		
+		cli1.getEndereco().addAll(Arrays.asList(e1,e2));
+		
+		
+		
+		
 		estRepo.saveAll(Arrays.asList(est1,est2));
 		cidRepo.saveAll(Arrays.asList(c1,c2,c3));
 		cateRepo.saveAll(Arrays.asList(cat1,cat2));
 		prodRepo.saveAll(Arrays.asList(p1,p2,p3));
+		cliRepo.saveAll(Arrays.asList(cli1));
+		endRepo.saveAll(Arrays.asList(e1,e2));
 		
 		
 		
