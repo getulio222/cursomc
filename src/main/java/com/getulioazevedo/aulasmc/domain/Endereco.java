@@ -1,5 +1,7 @@
 package com.getulioazevedo.aulasmc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 
 import javax.persistence.Entity;
@@ -22,10 +24,10 @@ public class Endereco implements Serializable{
 	private String complemento;
 	private String bairro;
 	private String cep;
-	
-	
-	@JoinColumn(name="cliente_id") //Nome da FK no banco referente a tabela Cliente.
+
+	@JsonIgnore
 	@ManyToOne
+	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
 	
 	@ManyToOne

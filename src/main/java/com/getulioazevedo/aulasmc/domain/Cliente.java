@@ -14,6 +14,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.getulioazevedo.aulasmc.domain.enums.TipoCliente;
 @Entity
 public class Cliente implements Serializable{
@@ -25,18 +28,15 @@ private Integer id;
 private String nome;
 private String email;
 private String cpfOuCnpj;
-private Integer tipo; // Internamente o Tipo enum vai ser armazenado como um Inteiro;
-
+private Integer tipo;
+@JsonManagedReference
 @OneToMany(mappedBy = "cliente")
 private List<Endereco> enderecos = new ArrayList<>();
 @ElementCollection
 @CollectionTable(name="TELEFONE")
-private Set<String> telefones = new HashSet<>(); /* Set é uma coleção de String que garante
- 													que não ira ter repetição nos registros. */
+private Set<String> telefones = new HashSet<>();
 
-public Cliente() { 
-
-
+public Cliente() {
 	}
 
 public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
@@ -88,6 +88,7 @@ public void setTipo(TipoCliente tipo) {
 	this.tipo = tipo.getCod(); // Só vai armazenar o código ( getCod )
 }
 
+@JsonManagedReference
 public List<Endereco> getEndereco() {
 	return enderecos;
 }

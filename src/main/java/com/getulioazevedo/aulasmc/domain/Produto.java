@@ -24,7 +24,7 @@ public class Produto implements Serializable {
 	private String nome;
 	private Double preco;
 	
-	@JsonIgnore //Tambem resolve a referencia Ciclica - Padrão de aula futura
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA", 
 	joinColumns = @JoinColumn(name = "produto_id"), 

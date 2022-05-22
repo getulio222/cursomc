@@ -18,7 +18,7 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 	
-	@ManyToMany(mappedBy = "categorias") // Mapear o relacionamento com o nome do papel da Categoria	
+	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	
 	public Categoria() {
@@ -79,10 +79,6 @@ public class Categoria implements Serializable {
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
 	}
-	
-	
-	
-	
-	
+
 
 }

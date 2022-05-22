@@ -10,32 +10,17 @@ import com.getulioazevedo.aulasmc.domain.Produto;
 import com.getulioazevedo.aulasmc.services.ProdutoService;
 
 @RestController
-@RequestMapping(value = "/produtos") // EndPonint da Classe
+@RequestMapping(value = "/produtos")
 public class ProdutoResource {
 	
 	@Autowired
-	private ProdutoService prodServ; // Dependencia do Serviço
+	private ProdutoService prodServ;
 	
-	@RequestMapping(value="/{id}",method = RequestMethod.GET) // EndPoint do Metodo
+	@RequestMapping(value="/{id}",method = RequestMethod.GET)
 	public ResponseEntity<?> buscarProduto(@PathVariable Integer id){		
-		Produto objProd = prodServ.buscarProdId(id); // Objeto estanciado recebendo o metodo da dependencia Service		
+		Produto objProd = prodServ.buscarProdId(id);
 		return ResponseEntity.ok().body(objProd);
 		
 	}
-	
-
 }
-
-/*
- * Anotações: As Classe do tipo Resources recebem as anotações do @RestControle
- * e os EndPoints.
- * -----------------------------------------------------------------------------
- * Sempre os metodos da classe que vai gerar o Rest tem que ter metodos pequenos.
- * É necessario criar a dependencia do Service, junto com @Autowired.
- * Mapear a classe e os Metodos, criando assim os EndPoints (@RequestMapping).
- * Colocar o Caminho do variavel que vai receber o ID da resposta (@PathVariable) 
- * Criar a estanciação da classe e gerar o objeto recebendo as propriedades da Classe Service.
- * Criar a logica do Retorno do metodo recebendo o tipo ReponsyEntity o status ok() 
- * e no corpo body(), o objeto.
- */
 

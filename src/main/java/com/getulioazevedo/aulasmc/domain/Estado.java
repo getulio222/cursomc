@@ -1,5 +1,7 @@
 package com.getulioazevedo.aulasmc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ public class Estado implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	@JsonIgnore
 	@OneToMany(mappedBy = "estados")
 	private List<Cidade> cidades = new ArrayList<>();
 
