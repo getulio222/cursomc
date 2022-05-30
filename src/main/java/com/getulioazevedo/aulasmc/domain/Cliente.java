@@ -6,13 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,13 +23,25 @@ private String nome;
 private String email;
 private String cpfOuCnpj;
 private Integer tipo;
+
 @JsonManagedReference
 @OneToMany(mappedBy = "cliente")
 private List<Endereco> enderecos = new ArrayList<>();
+
 @ElementCollection
 @CollectionTable(name="TELEFONE")
 private Set<String> telefones = new HashSet<>();
 
+@JsonManagedReference
+public List<Endereco> getEndereco() {
+return enderecos;
+}
+
+@OneToMany(mappedBy = "cliente")
+List<Pedido> pedido = new ArrayList<>();
+
+
+	//Construtores
 public Cliente() {
 	}
 
@@ -47,7 +53,10 @@ public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoClie
 	this.cpfOuCnpj = cpfOuCnpj;
 	this.tipo = tipo.getCod();
 }
+//
 
+
+// Getter and Setter
 public Integer getId() {
 	return id;
 }
@@ -81,16 +90,11 @@ public void setCpfOuCnpj(String cpfOuCnpj) {
 }
 
 public TipoCliente getTipo() {
-	return TipoCliente.toEnum(tipo); // Metodo estatico do Enum, armazenando o Inteiro (tipo)
+	return TipoCliente.toEnum(tipo);
 }
 
 public void setTipo(TipoCliente tipo) {
-	this.tipo = tipo.getCod(); // Só vai armazenar o código ( getCod )
-}
-
-@JsonManagedReference
-public List<Endereco> getEndereco() {
-	return enderecos;
+	this.tipo = tipo.getCod();
 }
 
 public void setEndereco(List<Endereco> endereco) {
@@ -108,6 +112,17 @@ public void setTelefones(Set<String> telefones) {
 public static long getSerialversionuid() {
 	return serialVersionUID;
 }
+
+public List<Pedido> getPedido() {
+return pedido;
+}
+
+public void setPedido(List<Pedido> pedido) {
+this.pedido = pedido;
+}
+//
+
+//HashCode and Equals
 
 @Override
 public int hashCode() {
