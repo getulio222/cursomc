@@ -1,15 +1,9 @@
 package com.getulioazevedo.aulasmc.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import java.util.*;
+import javax.persistence.*;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
@@ -31,10 +25,16 @@ public class Produto implements Serializable {
 	inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private List<Categoria> categorias = new ArrayList<>();
 
+
+	@JsonIgnore
+	@OneToMany(mappedBy="id.produto")
+	private Set<ItemPedido> itens = new HashSet<>(); // conjunto de pedidos para associar a ligação entre as duas tabelas
+
+
+	//Construtores
 	public Produto() {
 
 	}
-
 	public Produto(Integer id, String nome, Double preco) {
 		super();
 		this.id = id;
@@ -42,12 +42,16 @@ public class Produto implements Serializable {
 		this.preco = preco;
 	}
 
-	public List<Categoria> getCategorias() {
-		return categorias;
-	}
+	//
 
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
+	//Getter and Setter
+
+	public List<Pedido> getPedido(){ 			// Metodo do tipo Lista
+		List<Pedido> lista = new ArrayList<>(); // Cria uma lista vazia
+		for(ItemPedido x : itens){ 				// Percorre todos os item (Código) da tabela ItemPedido
+			lista.add(x.getPedido());			// Quando achar o código, alimenta a lista
+		}
+		return lista;  // Retorna todos os elementos da lista (pedidos)
 	}
 
 	public Integer getId() {
@@ -74,33 +78,35 @@ public class Produto implements Serializable {
 		this.preco = preco;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
+	//
+
+	//HashCod and Equals
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Produto produto = (Produto) o;
+		return Objects.equals(id, produto.id);
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+		return Objects.hash(id);
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Produto other = (Produto) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-
 }

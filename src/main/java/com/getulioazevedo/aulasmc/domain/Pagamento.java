@@ -32,6 +32,7 @@ public Pagamento(){}
 
 // Getter and Setter
 
+
     public Integer getId() {
         return id;
     }
@@ -45,7 +46,7 @@ public Pagamento(){}
     }
 
     public void setEstado(EstadoPagamento estado) {
-        this.estado = estado.getCod();
+    this.estado = estado.getCod();
     }
 
     public Pedido getPedido() {
@@ -55,7 +56,8 @@ public Pagamento(){}
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
     }
-//
+
+    //
 
 
     //HashCode and Equals

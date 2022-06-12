@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Pedido implements Serializable {
@@ -16,11 +18,12 @@ public class Pedido implements Serializable {
 
     private Date instante;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido") /* para evitar erro de entidade transiente quando salva
-      o
-    pedido e o
-     pagamento. */
+    @OneToMany(mappedBy = "id.pedido") // Mapeando o ID quem vem da classe ItemPedido
+    private Set<ItemPedido> itens = new HashSet<>(); // associar a ligação entre as duas tabelas
 
+
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido") /* para evitar erro de entidade transiente quando salva o pedido e o pagamento. */
     private Pagamento pagamento;
 
     @ManyToOne
@@ -43,6 +46,7 @@ public class Pedido implements Serializable {
     //
 
     //Getter and Setter
+
     public Integer getId() {
         return id;
     }
@@ -57,6 +61,14 @@ public class Pedido implements Serializable {
 
     public void setInstante(Date instante) {
         this.instante = instante;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
     }
 
     public Pagamento getPagamento() {
@@ -82,7 +94,6 @@ public class Pedido implements Serializable {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-
     //
 
     //HashCod and Equals

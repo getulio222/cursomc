@@ -4,6 +4,7 @@ package com.getulioazevedo.aulasmc;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.getulioazevedo.aulasmc.domain.*;
@@ -41,6 +42,9 @@ public class AulasmcApplication implements CommandLineRunner {
 
 	@Autowired
 	private PagamentoRespository pagRepo;
+
+	@Autowired
+	private ItemPedidoRepository itemRepo;
 	
 	
 	@Override
@@ -52,18 +56,18 @@ public class AulasmcApplication implements CommandLineRunner {
 		//
 
 		//Produtos
-		Produto p1 = new Produto(null,"Notebook Acer Nitro 5",3400.0);
-		Produto p2 = new Produto(null,"Mouser", 120.0);
-		Produto p3 = new Produto(null,"Impressora", 80.0);
+		Produto prod1 = new Produto(null,"Notebook Acer Nitro 5",3400.0);
+		Produto prod2 = new Produto(null,"Mouser", 120.0);
+		Produto prod3 = new Produto(null,"Impressora", 80.0);
 		//
 
 		//Categorias e Produtos
-		cat1.getProdutos().addAll(Arrays.asList(p1,p2,p3));
-		cat2.getProdutos().addAll(Arrays.asList(p3));
-		
-		p1.getCategorias().addAll(Arrays.asList(cat1));
-		p2.getCategorias().addAll(Arrays.asList(cat1,cat2));
-		p3.getCategorias().addAll(Arrays.asList(cat1));
+		cat1.getProdutos().addAll(Arrays.asList(prod1,prod2,prod3));
+		cat2.getProdutos().addAll(Arrays.asList(prod3));
+
+		prod1.getCategorias().addAll(Arrays.asList(cat1));
+		prod2.getCategorias().addAll(Arrays.asList(cat1,cat2));
+		prod3.getCategorias().addAll(Arrays.asList(cat1));
 		//
 
 
@@ -111,6 +115,19 @@ public class AulasmcApplication implements CommandLineRunner {
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2022 10:32"), cli1, e1);
 		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2022 19:35"), cli1, e2);
 
+		//Item Pedidos
+
+		ItemPedido ip1 = new ItemPedido(ped1, prod1, 0.00,1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, prod3, 0.00, 2, 80.0);
+		ItemPedido ip3 = new ItemPedido(ped2, prod2,100.0, 1, 800.0);
+
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+
+		prod1.getItens().addAll(Arrays.asList(ip1));
+		prod2.getItens().addAll(Arrays.asList(ip3));
+		prod3.getItens().addAll(Arrays.asList(ip2));
+
 		//
 
 		//Pagamentos
@@ -125,7 +142,6 @@ public class AulasmcApplication implements CommandLineRunner {
 		ped2.setPagamento(pagto2);
 
 
-
 		//Associações
 		cli1.getPedido().addAll(Arrays.asList(ped1, ped2));
 
@@ -135,11 +151,12 @@ public class AulasmcApplication implements CommandLineRunner {
 		estRepo.saveAll(Arrays.asList(est1,est2));
 		cidRepo.saveAll(Arrays.asList(c1,c2,c3));
 		cateRepo.saveAll(Arrays.asList(cat1,cat2));
-		prodRepo.saveAll(Arrays.asList(p1,p2,p3));
+		prodRepo.saveAll(Arrays.asList(prod1,prod2,prod3));
 		cliRepo.saveAll(Arrays.asList(cli1));
 		endRepo.saveAll(Arrays.asList(e1,e2));
 		pedRepo.saveAll(Arrays.asList(ped1,ped2));
 		pagRepo.saveAll(Arrays.asList(pagto1,pagto2));
+		itemRepo.saveAll(Arrays.asList(ip1,ip2,ip3));
 
 
 
