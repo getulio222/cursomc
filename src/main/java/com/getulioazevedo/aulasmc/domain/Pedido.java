@@ -1,5 +1,6 @@
 package com.getulioazevedo.aulasmc.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.persistence.*;
@@ -12,30 +13,36 @@ import java.util.Set;
 @Entity
 public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonFormat(pattern="dd/MM/yyyy HH:mm")
     private Date instante;
 
-    @OneToMany(mappedBy = "id.pedido") // Mapeando o ID quem vem da classe ItemPedido
-    private Set<ItemPedido> itens = new HashSet<>(); // associar a ligação entre as duas tabelas
-
-
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido") /* para evitar erro de entidade transiente quando salva o pedido e o pagamento. */
+    // Para evitar erro de entidade transiente quando salva o pedido e o pagamento
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Pagamento pagamento;
-
-    @ManyToOne
-    @JoinColumn(name = "endereco_de_entrega_id")
-    private Endereco enderecoDeEntrega;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
+    @ManyToOne
+    @JoinColumn(name = "endereco_de_entrega_id")
+    private Endereco enderecoDeEntrega;
+
+
+    @OneToMany(mappedBy = "id.pedido")
+    private Set<ItemPedido> itens = new HashSet<>();
+
+
     // Construtores
-    public Pedido(){}
+
+    public Pedido(){
+
+    }
 
     public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
         this.id = id;
@@ -63,20 +70,20 @@ public class Pedido implements Serializable {
         this.instante = instante;
     }
 
-    public Set<ItemPedido> getItens() {
-        return itens;
-    }
-
-    public void setItens(Set<ItemPedido> itens) {
-        this.itens = itens;
-    }
-
     public Pagamento getPagamento() {
         return pagamento;
     }
 
     public void setPagamento(Pagamento pagamento) {
         this.pagamento = pagamento;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public Endereco getEnderecoDeEntrega() {
@@ -87,13 +94,15 @@ public class Pedido implements Serializable {
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Set<ItemPedido> getItens() {
+        return itens;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
     }
+
+
     //
 
     //HashCod and Equals

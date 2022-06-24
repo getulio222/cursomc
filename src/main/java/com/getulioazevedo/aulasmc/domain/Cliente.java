@@ -24,7 +24,6 @@ private String email;
 private String cpfOuCnpj;
 private Integer tipo;
 
-@JsonManagedReference
 @OneToMany(mappedBy = "cliente")
 private List<Endereco> enderecos = new ArrayList<>();
 
@@ -37,6 +36,7 @@ public List<Endereco> getEndereco() {
 return enderecos;
 }
 
+@JsonIgnore
 @OneToMany(mappedBy = "cliente")
 List<Pedido> pedido = new ArrayList<>();
 

@@ -6,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class ItemPedido {
-
+public class ItemPedido implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JsonIgnore
@@ -21,9 +21,21 @@ public class ItemPedido {
     private Integer quantidade;
     private Double preco;
 
+    //Construtores
+
     public ItemPedido() {
     }
 
+    public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
+        super();
+        id.setPedido(pedido);
+        id.setProduto(produto);
+        this.desconto = desconto;
+        this.quantidade = quantidade;
+        this.preco = preco;
+    }
+
+    //Getter and Setter
     @JsonIgnore
     public Pedido getPedido() {
         return id.getPedido();
@@ -67,19 +79,8 @@ public class ItemPedido {
 
     //
 
-    //Construtor
-
-    public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
-        super();
-        id.setPedido(pedido);
-        id.setProduto(produto);
-        this.desconto = desconto;
-        this.quantidade = quantidade;
-        this.preco = preco;
-    }
 
     //Hash Code and Equals
-
 
     @Override
     public boolean equals(Object o) {

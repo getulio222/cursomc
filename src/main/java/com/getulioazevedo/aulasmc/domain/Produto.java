@@ -6,8 +6,6 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-
 @Entity
 public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -25,10 +23,10 @@ public class Produto implements Serializable {
 	inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private List<Categoria> categorias = new ArrayList<>();
 
-
+	// Conjunto de pedidos para associar a ligação entre as duas tabelas
 	@JsonIgnore
 	@OneToMany(mappedBy="id.produto")
-	private Set<ItemPedido> itens = new HashSet<>(); // conjunto de pedidos para associar a ligação entre as duas tabelas
+	private Set<ItemPedido> itens = new HashSet<>();
 
 
 	//Construtores
@@ -45,7 +43,7 @@ public class Produto implements Serializable {
 	//
 
 	//Getter and Setter
-
+	@JsonIgnore
 	public List<Pedido> getPedido(){ 			// Metodo do tipo Lista
 		List<Pedido> lista = new ArrayList<>(); // Cria uma lista vazia
 		for(ItemPedido x : itens){ 				// Percorre todos os item (Código) da tabela ItemPedido

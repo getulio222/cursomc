@@ -10,6 +10,7 @@ import java.util.Objects;
 
 @Embeddable // Para informar ao JPA que essa classe é um subtipo.
 public class ItemPedidoPK implements Serializable {
+    private static final long serialVersionUID = 1L;
 
    @ManyToOne
    @JoinColumn(name = "pedido_id") // Será a chave estrangeira no banco
@@ -39,6 +40,9 @@ public class ItemPedidoPK implements Serializable {
     }
 
     //
+
+
+    // Hash Code and Equals
 
     @Override
     public boolean equals(Object o) {

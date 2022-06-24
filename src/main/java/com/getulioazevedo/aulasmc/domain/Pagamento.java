@@ -1,5 +1,6 @@
 package com.getulioazevedo.aulasmc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.getulioazevedo.aulasmc.domain.enums.EstadoPagamento;
 
 import javax.persistence.*;
@@ -14,13 +15,18 @@ public abstract class Pagamento implements Serializable {
     @Id
     private Integer id;
     private Integer estado;
+
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name ="pedido_id")
     @MapsId
     private Pedido pedido;
 
  //Construtores
-public Pagamento(){}
+
+    public Pagamento(){
+
+    }
 
     public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
         this.id = id;
